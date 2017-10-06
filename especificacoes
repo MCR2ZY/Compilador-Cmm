@@ -1,0 +1,40 @@
+Palavras Reservadas:
+booleano
+caracter
+enquanto
+inteiro
+para
+real
+retorne
+se
+semretorno
+
+Lista de Sinais:
+! : NEGACAO
+!= : SN_DIFERENTE
+* : SN_MULTIPLICACAO
++ : SN_SOMA
+- : SN_SUBTRACAO
+/ : SN_DIVISAO
+; : SN_PTO_VIRGULA
+< : SN_MENOR
+<= : SN_MENOR_IGUAL
+= : SN_ATRIBUICAO
+== : SN_COMPARACAO
+> : SN_MAIOR
+>= : SN_MAIOR_IGUAL
+( : SN_ABRI_PARENTESE
+) : SN_FECHA_PARENTESE
+{ : SN_ABRI_CHAVE
+} : SN_FECHA_CHAVE
+|| : SN_OR
+&& : SN_AND
+
+Tipos de token:
+ID =  Identificador
+CT_C = Constante Caracter
+CT_I = Constante Inteira
+CT_L = Constante Literal
+CT_R = Constante Real 
+PR = Palavra Reservada
+SN = Sinal
