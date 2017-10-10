@@ -1,3 +1,12 @@
+/**
+******************************************************************************
+* @file	analex.h
+* @author Maurício Menezes
+* @version  x.x
+* @date 10.10.17
+* @brief
+******************************************************************************
+*/
 #ifndef ANALEX_H_INCLUDED
 #define ANALEX_H_INCLUDED
 
@@ -12,7 +21,8 @@ typedef enum sinal{
     SN_ABRI_CHAVE,          SN_ABRI_PARENTESE,       SN_AND,            SN_ATRIBUICAO,          SN_COMPARACAO,
     SN_DIFERENTE,           SN_DIVISAO,              SN_DIVISAO,        SN_FECHA_CHAVE,         SN_FECHA_PARENTESE,
     SN_MAIOR,               SN_MAIOR_IGUAL,          SN_MENOR,          SN_MENOR_IGUAL,         SN_MULTIPLICACAO,
-    SN_NEGACAO,             SN_OR,                   SN_PTO_VIRGULA,    SN_SOMA,                SN_SUBTRACAO
+    SN_NEGACAO,             SN_OR,                   SN_PTO_VIRGULA,    SN_SOMA,                SN_SUBTRACAO,
+    SN_VIRGULA
 }Sinal;
 
 typedef enum categoria{
