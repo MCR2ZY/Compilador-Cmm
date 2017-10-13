@@ -7,7 +7,29 @@
 * @brief
 ******************************************************************************
 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include "analex.h"
+
+Token analex(FILE *fd){
+    Token token;
+    int estado = 0;
+    int p;
+    int c;
+    char literal[TamLexema];
+    char num[TamNum];
+
+
+
+    while(true){
+        
+        switch (estado){
+        
+            case 0:
+            c = fgetc(fp);    
+            break;
+        default:
+            break;
+        }
+
+    }
+
+}
