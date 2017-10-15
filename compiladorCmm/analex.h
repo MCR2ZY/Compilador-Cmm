@@ -10,7 +10,7 @@
 #ifndef ANALEX_H_INCLUDED
 #define ANALEX_H_INCLUDED
 
-#include <stdin.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -20,36 +20,29 @@
 #define QntSinal 21
 #define TamSinal 3
 #define TamLexema 20
-#define TamNum 20 
+#define TamNum 20
 #define EOS '\0'
 
 typedef enum palReservada{
-    PR_BOOLEANO,        PR_CARACTER,        PR_ENQUANTO, 
-    PR_INTEIRO,         PR_PARA,            PR_REAL, 
+    PR_BOOLEANO,        PR_CARACTER,        PR_ENQUANTO,
+    PR_INTEIRO,         PR_PARA,            PR_REAL,
     PR_RETORNE,         PR_SE,              PR_SEM_PARAM,
-    PR_SEM_RETORNO,     PR_SENAO   
+    PR_SEM_RETORNO,     PR_SENAO
 }PalReservada;
 
 typedef enum sinal{
     SN_ABRI_CHAVE,          SN_ABRI_PARENTESE,       SN_AND,            SN_ATRIBUICAO,          SN_COMPARACAO,
-    SN_DIFERENTE,           SN_DIVISAO,              SN_FECHA_CHAVE,    SN_FECHA_PARENTESE,     SN_MAIOR,       
+    SN_DIFERENTE,           SN_DIVISAO,              SN_FECHA_CHAVE,    SN_FECHA_PARENTESE,     SN_MAIOR,
     SN_MAIOR_IGUAL,         SN_MENOR,                SN_MENOR_IGUAL,    SN_MULTIPLICACAO,       SN_NEGACAO,
     SN_OR,                  SN_PTO_VIRGULA,          SN_SOMA,           SN_SUBTRACAO,           SN_VIRGULA
 }Sinal;
 
 typedef enum categoria{
-    CT_C, CT_I, CT_L, 
-    CT_R, ID,   PR, 
+    CT_C, CT_I, CT_L,
+    CT_R, ID,   PR,
     SINAL
 } Categoria;
 
-extern char tabPalReservada[QntPalReservadas][TamPalReservadas]{
-    "booleano", "caracter", "enquanto", "inteiro", "para", "real", "retorne", "se", "semparam", "semretorno", "senao" 
-}
-
-extern char tabSinal[QntSinal][TamSinal]{
-    "{", "(", "&&", "=", "==", "!=", "/", "}", ")", ">", ">=", "<", "<=", "*", "!", "||", ";", "+", "-", ","
-}
 
 typedef struct token{
     Categoria tipo;
