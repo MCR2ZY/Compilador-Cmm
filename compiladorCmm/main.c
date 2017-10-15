@@ -7,40 +7,30 @@
 * @brief
 ******************************************************************************
 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <analex.c>
+#include "analex.h"
 
 int main(int argc, char const *argv[])
 {
-    Token token;
+    Token tkn;
     FILE *fp;
 
-    if((fp = fopen (cod.txt, rt)) == NULL){
-        printf("ERRO AO ABRIR ARQUIVO");
-        printf("\n\tPressione <ENTER> para finalizar...\n\t");
-        getchar();
-        fflush(stdin);
-        exit(1);
-    }
+    fp = fopen("cod.txt", "r+");
 
+    if(fp==NULL){
+        printf("\n\tERRO AO ABRIR ARQUIVO");
+        printf("\n\tPressione <ENTER> para finalizar...\n\t");
+        exit(1);
+    }else{
+
+    printf("PASSOU!");}
     while(!feof (fp)){
-        token = analex(fp);
+        tkn = analex(fp);
     }
 
     printf ("\n\n\tAnalise lexica executada com sucesso.\n");
-	
-	printf("\n\tPressione <ENTER> para continuar...\n\t");
-	getchar();
-	fflush(stdin);
-    
-    if (fclose(fp)) {
-		printf ("\n\tErro fatal no fechamento de arquivo. O programa sera encerrado.\n");
-		printf("\n\tPressione <ENTER> para continuar...\n\t");
-		getchar();
-		fflush(stdin);
-		exit (1);
-	}
+    fclose(fp);
+
+
 
     return 0;
 }
