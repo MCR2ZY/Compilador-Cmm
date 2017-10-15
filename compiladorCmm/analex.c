@@ -9,7 +9,7 @@
 */
 #include "analex.h"
 
-Token analex(FILE *fd){
+Token analex(FILE *fp){
     Token token;
     int estado = 0;
     int p;
@@ -19,12 +19,12 @@ Token analex(FILE *fd){
 
 
 
-    while(true){
-        
+    while(1){
+
         switch (estado){
-        
+
             case 0:
-            c = fgetc(fp);    
+            c = fgetc(fp);
             break;
         default:
             break;
