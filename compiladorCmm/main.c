@@ -10,6 +10,12 @@
 #include "analex.h"
 
 void imprimeToken(Token ); //Função temporaria de teste para imprimir tokens
+char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
+        "booleano",        "caracter",        "enquanto",
+        "inteiro",         "para",            "real",
+        "retorne",         "se",              "semparam",
+        "semretorno",     "senao"
+    };
 
 int main(int argc, char const *argv[])
 {
@@ -23,7 +29,7 @@ int main(int argc, char const *argv[])
         printf("\n\tPressione <ENTER> para finalizar...\n\t");
         exit(1);
     }
-    
+
     while(!feof (fp)){
         tkn = analex(fp);
         imprimeToken(tkn);
