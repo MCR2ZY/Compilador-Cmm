@@ -91,7 +91,7 @@ Token analex(FILE *fp){
                 break;
             case 1:
                 literal[p] = c;
-                c++;
+                p++;
                 c = fgetc(fp);
                 if(isalnum(c) || c == '_'){
                     estado = 1;
@@ -109,7 +109,7 @@ Token analex(FILE *fp){
                 break;
             case 3:
                 numero[p] = c;
-                c++;
+                p++;
                 c = fgetc(fp);
                 if(isdigit(c)){
                     estado = 3;
@@ -128,7 +128,7 @@ Token analex(FILE *fp){
                 break;
             case 5:
                 numero[p] = c;
-                c++;
+                p++;
                 c = fgetc(fp);
                 if(isdigit(c)){
                     estado = 6;
@@ -138,7 +138,7 @@ Token analex(FILE *fp){
                 break;
             case 6:
                 numero[p] = c;
-                c++;
+                p++;
                 c = fgetc(fp);
                 if(isdigit(c)){
                     estado = 6;
@@ -155,7 +155,7 @@ Token analex(FILE *fp){
                 break;
             case 8:
                 literal[p] = c;
-                c++;
+                p++;
                 c = fgetc(fp);
                 if(c == '\\'){
                     estado = 11;
@@ -165,7 +165,8 @@ Token analex(FILE *fp){
                 break;
             case 9:
                 literal[p] = c;
-                c = fget(fp);
+                p++;
+                c = fgetc(fp);
                 if(c == '\''){
                     estado = 10;
                 }else{
@@ -180,7 +181,163 @@ Token analex(FILE *fp){
                 strcpy(literal, token.lexema);
                 return token;
                 break;
-        default:
+            case 11:
+                literal[p] = c;
+                p++;
+                c = fgetc(fp);
+                if(c == '0'){
+                    estado = 12;
+                }else if(c == 'n'){
+                    estado = 14;
+                }else {
+                    //ErroToken;
+                }                          
+                break;
+            case 12:
+                literal[p] = c;
+                p++;
+                c = fgetc(fp);
+                if(c == '\''){
+                    estado = 13;
+                }else{
+                    //ErroToken;
+                }
+                break;
+            case 13:
+                literal[p] = c;
+                p++;
+                literal[p] = EOS;
+                token.tipo = CT_C;
+                strcpy(literal, token.lexema);
+                return token;                
+                break;
+            case 14:
+                literal[p] = c;
+                p++;
+                c = fgetc(fp);
+                if(c == '\''){
+                    estado = 15;
+                }else{
+                    //ErroToken;
+                }
+                break;
+            case 15:
+                literal[p] = c;
+                p++;
+                literal[p] = EOS;
+                token.tipo = CT_C;
+                strcpy(literal, token.lexema);
+                return token;
+                break;
+            case 16:
+                literal[p] = c;
+                p++;
+                c = fgetc(fp);
+                if(isprint(c)){
+                    estado = 16;
+                }else if(c == '\''){
+                    estado = 17
+                }else{
+                    //ErroToken;
+                }          
+                break;
+            case 17:
+                literal[p] = c;
+                p++;
+                literal[p] = EOS;
+                token.tipo = CT_L;
+                strcpy(literal, token.lexema);
+                return token;              
+                break;
+            case 18:
+                token.tipo = SN;
+                token.codSN = SN_PTO_VIRGULA;
+                strcpy(';', token.lexema);
+                return token;
+                break;
+            case 19:
+                token.tipo = SN;
+                token.codSN = SN_ABRI_PARENTESE;
+                strcpy('(', token.lexema);
+                return token;
+                break;
+            case 20:
+                token.tipo = SN;
+                token.codSN = SN_FECHA_PARENTESE;
+                strcpy(')', token.lexema);
+                return token;
+                break;
+            case 21:
+                token.tipo = SN;
+                token.codSN = SN_SUBTRACAO;
+                strcpy('-', token.lexema);
+                return token;
+                break;
+            case 22:
+                token.tipo = SN;
+                token.codSN = SN_SOMA;
+                strcpy('+', token.lexema);
+                return token;
+                break;
+            case 23:
+                token.tipo = SN;
+                token.codSN = SN_MULTIPLICACAO;
+                strcpy('*', token.lexema);
+                return token;
+                break;
+            case 24:
+                token.tipo = SN;
+                token.codSN = SN_VIRGULA;
+                strcpy(',', token.lexema);
+                return token;
+                break;
+            case 25:
+                c = fgetc(fp);
+                if(c == '&'){
+                    estado = 26;
+                }else{
+                    //ErroToken;
+                }
+                break;
+            case 26:
+                token.tipo = SN;
+                token.codSN = SN_AND;
+                strcpy('&&', token.lexema);
+                return token;
+                break;
+            case 27:
+                c = fgetc(fp);
+                if(c == '|'){
+                    estado = 28;
+                }else{
+                    //ErroToken;
+                }
+                break;
+            case 28:
+                token.tipo = SN;
+                token.codSN = SN_OR;
+                strcpy('||', token.lexema);
+                return token;
+                break;
+            case 29:
+                c = fgetc(fp);
+                if(c == '='){
+                    estado = 31;
+                }else{
+                    estado = 30;
+                }
+                break;
+            case 46:
+                token.tipo = SN;
+                token.codSN = SN_ABRI_CHAVE;
+                strcpy('{', token.lexema);
+                break;
+            case 47:
+                token.tipo = SN;
+                token.codSN = SN_FECHA_CHAVE;
+                strcpy('}', token.lexema);
+                break;
+            default:
             break;
         }
 
