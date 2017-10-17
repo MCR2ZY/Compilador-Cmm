@@ -20,9 +20,8 @@ int main(int argc, char const *argv[])
         printf("\n\tERRO AO ABRIR ARQUIVO");
         printf("\n\tPressione <ENTER> para finalizar...\n\t");
         exit(1);
-    }else{
+    }
 
-    printf("PASSOU!");}
     while(!feof (fp)){
         tkn = analex(fp);
     }
