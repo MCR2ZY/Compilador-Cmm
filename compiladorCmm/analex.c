@@ -83,10 +83,10 @@ Token analex(FILE *fp){
                     estado = 41;
                 }
                 else if(c == '{'){          // Trata o abri chave
-                    estado = 46;
+                    estado = 45;
                 }
                 else if(c == '}'){          // Trata o fecha chave
-                    estado = 47;
+                    estado = 46;
                 }
                 break;
             case 1:
@@ -327,12 +327,120 @@ Token analex(FILE *fp){
                     estado = 30;
                 }
                 break;
-            case 46:
+            case 30:
+                unget(c, fp);
+                token.tipo = SN;
+                token.codSN = SN_MENOR;
+                strcpy ('<', token.lexema);
+                return token; 
+                break;
+            case 31:
+                token.tipo = SN;
+                token.codSN = SN_MENOR_IGUAL;
+                strcpy ('<=', token.lexema);
+                return token;
+                break;
+            case 32:
+                c = fgetc(fp);
+                if(c == '='){
+                    estado = 33;
+                }else{
+                    estado = 34;
+                }
+                break;
+            case 33:
+                unget(c, fp);
+                token.tipo = SN;
+                token.codSN = SN_MAIOR;
+                strcpy ('>', token.lexema);
+                return token; 
+                break;
+            case 34:
+                token.tipo = SN;
+                token.codSN = SN_MAIOR_IGUAL;
+                strcpy ('>=', token.lexema);
+                return token;
+                break;
+            case 35:
+                c = fgetc(fp);
+                if(c == '='){
+                    estado = 37;
+                }else{
+                    estado = 36;
+                }
+                break;
+            case 36:
+                ungetc(c, fp);
+                token.tipo = SN;
+                token.codSN = SN_ATRIBUICAO;
+                strcpy ('=', token.lexema);
+                return token;
+                break;
+            case 37:
+                token.tipo = SN;
+                token.codSN = SN_COMPARACAO;
+                strcpy('==', token.lexema);
+                return token;
+                break;
+            case 38:
+                c = fgetc(fp);
+                if(c == '='){
+                    estado = 40;
+                }else{
+                    estado = 39;
+                }
+                break;
+            case 39:
+                ungetc(c, fp);
+                token.tipo = SN;
+                token.codSN = SN_NEGACAO;
+                strcpy('!', token.lexema);
+                return token;
+                break;
+            case 40:
+                token.tipo = SN;
+                token.codSN = SN_DIFERENTE;
+                strcpy('!=', token.lexema)
+                break;
+            case 41:
+                c = fgetc(fp);
+                if(c == '*'){
+                    estado = 43;
+                }else{
+                    estado = 42;
+                }
+                break;
+            case 42:
+                ungetc(c, fp);
+                token.tipo = SN;
+                token.codSN = SN_DIVISAO;
+                strcpy ('/', token.lexema);
+                return token;
+                break;
+            case 43:
+                c = fgetc(fp);
+                if(c == '*'){
+                    estado = 44;
+                }else if(isprint(c) && c != '*'){
+                    estado = 43;
+                }
+                break;
+            case 44:
+                c = fgetc(fp);
+                if(c == '*'){
+                    estado = 44;
+                }else if(isprint(c) && c != '*'){
+                    estado = 43;
+                }else if(c == '/'){
+                    estado = 0;
+                }
+                break;
+            case 45:
                 token.tipo = SN;
                 token.codSN = SN_ABRI_CHAVE;
                 strcpy('{', token.lexema);
                 break;
-            case 47:
+            case 46:
                 token.tipo = SN;
                 token.codSN = SN_FECHA_CHAVE;
                 strcpy('}', token.lexema);
