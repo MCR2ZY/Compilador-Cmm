@@ -56,6 +56,8 @@ typedef struct token{
 	} valor;
 }Token;
 
+extern char TabPalReservadas[QntPalReservadas][TamPalReservadas];
+
 Token analex(FILE *);
 
 #endif // ANALEX_H_INCLUDED
