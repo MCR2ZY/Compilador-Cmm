@@ -9,6 +9,8 @@
 */
 #include "analex.h"
 
+void imprimeToken(Token ); //Função temporaria de teste para imprimir tokens
+
 int main(int argc, char const *argv[])
 {
     Token tkn;
@@ -21,15 +23,43 @@ int main(int argc, char const *argv[])
         printf("\n\tPressione <ENTER> para finalizar...\n\t");
         exit(1);
     }
-
+    
     while(!feof (fp)){
         tkn = analex(fp);
+        imprimeToken(tkn);
     }
 
     printf ("\n\n\tAnalise lexica executada com sucesso.\n");
     fclose(fp);
-
-
-
+    getchar();
     return 0;
+}
+
+void imprimeToken(Token tkn){
+
+    switch (tkn.tipo){
+        case CT_C:
+            printf("\n\t<CT_C, %s>", tkn.lexema);;
+            break;
+        case CT_I:
+            printf("\n\t<CT_I, %d>", tkn.valor.valorInt);
+            break;
+        case CT_L:
+            printf("\n\t<CT_L, %s>", tkn.lexema);
+            break;
+        case CT_R:
+            printf("\n\t<CT_R, %f>", tkn.valor.valorReal);
+            break;
+        case ID:
+            printf("\n\t<ID, %s>", tkn.lexema);
+            break;
+        case PR:
+            printf("\n\t<PR, %s>", tkn.lexema);
+            break;
+        case SN:
+            printf("\n\t<SN, %s>", tkn.lexema);
+            break;
+    }
+
+    return;
 }
