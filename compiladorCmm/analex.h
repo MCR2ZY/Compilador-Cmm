@@ -40,7 +40,7 @@ typedef enum sinal{
 typedef enum categoria{
     CT_C, CT_I, CT_L,
     CT_R, ID,   PR,
-    SINAL
+    SN
 } Categoria;
 
 
