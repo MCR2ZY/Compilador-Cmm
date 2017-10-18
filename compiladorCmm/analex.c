@@ -9,14 +9,16 @@
 */
 #include "analex.h"
 
+int contlin = 1;
+
 Token analex(FILE *fp){
     Token token;                       // Recebe o token do analisador lexico
     int i;                             // Variavel auxiliar para laços de repeticao
     int estado = 0;                    // Controla o estado no automato
-    int p = 0;                             // Controla a posição tanto da vetor para literal quanto do vetor para o numero
+    int p = 0;                         // Controla a posição tanto da vetor para literal quanto do vetor para o numero
     int c;                             // Recebe o caracter do arquivo
     char literal[TamLexema];           // Vetor temporario que guarda o literal
-    char numero[TamNum];                  // Vetor temporario que guarda o numero
+    char numero[TamNum];               // Vetor temporario que guarda o numero
     char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
         "booleano",        "caracter",        "enquanto",
         "inteiro",         "para",            "real",
@@ -40,6 +42,12 @@ Token analex(FILE *fp){
                 else if(c == ' ' || c == '\t'){  // Filtra espacos e tabs
                     estado = 0;
                 }
+                else if(c == '\n')
+                {
+                    estado = 0;
+                    contlin++;
+                }
+
                 else if(isalpha(c)){   // Trata ID's e pal. reservadas
                     estado = 1;
                 }
@@ -99,6 +107,9 @@ Token analex(FILE *fp){
                 }
                 else if(c == '}'){          // Trata o fecha chave
                     estado = 46;
+                }
+                else{
+                    printf("\n\n\tErro, Token Invalido na Linha %d", contlin);
                 }
                 break;
             case 1:
