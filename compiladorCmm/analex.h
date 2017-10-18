@@ -19,7 +19,8 @@
 #define TamPalReservadas 15
 #define QntSinal 21
 #define TamSinal 3
-#define TamLexema 20
+#define QntLiteral 100
+#define TamLexema 30
 #define TamNum 20
 #define EOS '\0'
 
@@ -57,7 +58,10 @@ typedef struct token{
 }Token;
 
 extern char TabPalReservadas[QntPalReservadas][TamPalReservadas];
+extern char TabSinais[QntSinal][TamSinal];
+extern char TabelaLiterais[QntLiteral][TamLexema];
 extern int contlin;
+extern int ultimoLiteral;
 
 Token analex(FILE *);
 
