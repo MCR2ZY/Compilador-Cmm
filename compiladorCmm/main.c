@@ -45,25 +45,25 @@ void imprimeToken(Token tkn){
 
     switch (tkn.tipo){
         case CT_C:
-            printf("\n\t<CT_C, %s>", tkn.lexema);;
+            printf("\n\t< CT_C, \"%s\" >", tkn.lexema);;
             break;
         case CT_I:
-            printf("\n\t<CT_I, %d>", tkn.valor.valorInt);
+            printf("\n\t< CT_I, \"%d\" >", tkn.valor.valorInt);
             break;
         case CT_L:
-            printf("\n\t<CT_L, %s>", tkn.lexema);
+            printf("\n\t< CT_L, \"%s\" >", tkn.lexema);
             break;
         case CT_R:
-            printf("\n\t<CT_R, %f>", tkn.valor.valorReal);
+            printf("\n\t< CT_R, \"%f\" >", tkn.valor.valorReal);
             break;
         case ID:
-            printf("\n\t<ID, %s>", tkn.lexema);
+            printf("\n\t< ID, \"%s\" >", tkn.lexema);
             break;
         case PR:
-            printf("\n\t<PR, %s>", tkn.lexema);
+            printf("\n\t< PR, \"%s\" >", tkn.lexema);
             break;
         case SN:
-            printf("\n\t<SN, %s>", tkn.lexema);
+            printf("\n\t< SN, \"%s\" >", tkn.lexema);
             break;
         case END:
             break;
