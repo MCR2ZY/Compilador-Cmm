@@ -61,12 +61,15 @@ void imprimeToken(Token tkn){
             printf(" [Codigo literal: %d]", tkn.valor.posLiteral);
             break;
         case PR:
-            printf("\n\t< PR, \"%s\" >", tkn.lexema);
+            printf("\n\t< PR, \"%s\" >", TabPalReservadas[tkn.valor.codPR]);
             break;
         case SN:
             printf("\n\t< SN, \"%s\" >", tkn.lexema);
             break;
         case END:
+            printf("\n\n\tEncerando...\n");
+            getchar();
+            exit (1);
             break;
     }
 
