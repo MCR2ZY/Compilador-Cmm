@@ -58,6 +58,7 @@ void imprimeToken(Token tkn){
             break;
         case ID:
             printf("\n\t< ID, \"%s\" >", tkn.lexema);
+            printf(" [Codigo literal: %d]", tkn.valor.posLiteral);
             break;
         case PR:
             printf("\n\t< PR, \"%s\" >", tkn.lexema);
