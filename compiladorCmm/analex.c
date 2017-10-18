@@ -32,7 +32,12 @@ Token analex(FILE *fp){
 
             case 0:
                 c = fgetc(fp);
-                if(c == ' ' || c == '\t'){  // Filtra espacos e tabs
+                if(c == EOF){
+                    ungetc(c, fp);
+                    token.tipo = END;
+                    return token;
+                }
+                else if(c == ' ' || c == '\t'){  // Filtra espacos e tabs
                     estado = 0;
                 }
                 else if(isalpha(c)){   // Trata ID's e pal. reservadas
@@ -444,7 +449,7 @@ Token analex(FILE *fp){
                 c = fgetc(fp);
                 if(c == '*'){
                     estado = 44;
-                }else if(isprint(c) && c != '*'){
+                }else if(isprint(c) && c != '*' && c != '/'){
                     estado = 43;
                 }else if(c == '/'){
                     estado = 0;
@@ -454,11 +459,13 @@ Token analex(FILE *fp){
                 token.tipo = SN;
                 token.valor.codSN = SN_ABRI_CHAVE;
                 strcpy(token.lexema, "{");
+                return token;
                 break;
             case 46:
                 token.tipo = SN;
                 token.valor.codSN = SN_FECHA_CHAVE;
                 strcpy(token.lexema, "}");
+                return token;
                 break;
             default:
                 printf("\n\tErro Léxico!!!\n");
