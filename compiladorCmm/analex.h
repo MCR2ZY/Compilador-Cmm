@@ -38,9 +38,9 @@ typedef enum sinal{
 }Sinal;
 
 typedef enum categoria{
-    CT_C, CT_I, CT_L,
-    CT_R, ID,   PR,
-    SN
+    END = -1,   CT_C,       CT_I,
+    CT_L,       CT_R,       ID,
+    PR,         SN
 } Categoria;
 
 
