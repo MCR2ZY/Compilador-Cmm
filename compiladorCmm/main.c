@@ -65,6 +65,8 @@ void imprimeToken(Token tkn){
         case SN:
             printf("\n\t<SN, %s>", tkn.lexema);
             break;
+        case END:
+            break;
     }
 
     return;
