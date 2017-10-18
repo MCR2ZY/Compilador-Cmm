@@ -10,6 +10,7 @@
 #include "analex.h"
 
 int contlin = 1;
+int ultimoLiteral = 0;
 
 Token analex(FILE *fp){
     Token token;                       // Recebe o token do analisador lexico
@@ -19,11 +20,18 @@ Token analex(FILE *fp){
     int c;                             // Recebe o caracter do arquivo
     char literal[TamLexema];           // Vetor temporario que guarda o literal
     char numero[TamNum];               // Vetor temporario que guarda o numero
+    char TabelaLiterais[QntLiteral][TamLexema];
     char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
         "booleano",        "caracter",        "enquanto",
         "inteiro",         "para",            "real",
         "retorne",         "se",              "semparam",
         "semretorno",     "senao"
+    };
+    char TabSinais[QntSinal][TamSinal] = {
+        "{",    "(",    "&&",   "=",    "==",
+        "!=",   "/",    "}",    ")",    ">",
+        ">=",   "<",    "<=",   "*",    "!",
+        "||",   ";",    "+",    "-",    ","
     };
 
 
@@ -37,6 +45,7 @@ Token analex(FILE *fp){
                 if(c == EOF){
                     ungetc(c, fp);
                     token.tipo = END;
+                    token.valor.valorInt=0;
                     return token;
                 }
                 else if(c == ' ' || c == '\t'){  // Filtra espacos e tabs
@@ -110,6 +119,9 @@ Token analex(FILE *fp){
                 }
                 else{
                     printf("\n\n\tErro, Token Invalido na Linha %d", contlin);
+                    token.tipo = END;
+                    token.valor.valorInt = 0;
+                    return token;
                 }
                 break;
             case 1:
@@ -133,9 +145,21 @@ Token analex(FILE *fp){
                         return token;
                     }
                 }
+                for(i=0; i<QntLiteral; i++){
+                    if(!strcmp(literal, TabelaLiterais[i])){
                         token.tipo = ID;
                         strcpy(token.lexema, literal);
+                        token.valor.posLiteral = i;
                         return token;
+                    }
+                }
+                // Novo ID
+                token.tipo = ID;
+                token.valor.posLiteral = ultimoLiteral;
+                strcpy(token.lexema, literal);
+                strcpy(TabelaLiterais[ultimoLiteral], literal);
+                ultimoLiteral++;
+                return token;
                 // Checar se ID já existe, se não add id a tabela com ids
                 break;
             case 3:
@@ -264,9 +288,9 @@ Token analex(FILE *fp){
                 literal[p] = c;
                 p++;
                 c = fgetc(fp);
-                if(isprint(c)){
+                if(isprint(c) && c != '\"'){
                     estado = 16;
-                }else if(c == '\''){
+                }else if(c == '\"'){
                     estado = 17;
                 }else{
                     //ErroToken;
