@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
     FILE *fp;
 
     printf("Insira o nome do arquivo(nomeArquivo.extensao):\n");
-    scanf(" %s", &nomeFile);
+    scanf(" %s", nomeFile);
     fp = fopen(nomeFile, "r+");
 
     if(fp==NULL){

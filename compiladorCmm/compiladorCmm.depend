@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1508325521 source:c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\analex.c
+1508416352 source:c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\analex.c
 	"analex.h"
 
-1508323542 c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\analex.h
+1508417934 c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\analex.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 
-1508284154 source:c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\main.c
+1508415506 source:c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\main.c
 	"analex.h"
 
 1508035592 c:\users\maury\documents\projetos\compilador-cmm\compiladorcmm\analex.c
