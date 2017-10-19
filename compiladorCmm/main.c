@@ -10,19 +10,16 @@
 #include "analex.h"
 
 void imprimeToken(Token ); //Função temporaria de teste para imprimir tokens
-char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
-        "booleano",        "caracter",        "enquanto",
-        "inteiro",         "para",            "real",
-        "retorne",         "se",              "semparam",
-        "semretorno",     "senao"
-    };
 
 int main(int argc, char const *argv[])
 {
     Token tkn;
+    char nomeFile[tamNomeFile];
     FILE *fp;
 
-    fp = fopen("cod.txt", "r+");
+    printf("Insira o nome do arquivo(nomeArquivo.extensao):\n");
+    scanf(" %s", &nomeFile);
+    fp = fopen(nomeFile, "r+");
 
     if(fp==NULL){
         printf("\n\tERRO AO ABRIR ARQUIVO");
@@ -35,9 +32,7 @@ int main(int argc, char const *argv[])
         imprimeToken(tkn);
     }
 
-    printf ("\n\n\tAnalise lexica executada com sucesso.\n");
     fclose(fp);
-    getchar();
     return 0;
 }
 
@@ -67,6 +62,7 @@ void imprimeToken(Token tkn){
             printf("\n\t< SN, \"%s\" >", tkn.lexema);
             break;
         case END:
+            printf ("\n\n\tAnalise lexica executada com sucesso.\n");
             printf("\n\n\tEncerando...\n");
             getchar();
             exit (1);
