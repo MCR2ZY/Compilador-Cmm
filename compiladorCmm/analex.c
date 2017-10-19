@@ -26,7 +26,7 @@ Token analex(FILE *fp){
     int i;                             // Variavel auxiliar para laços de repeticao
     int estado = 0;                    // Controla o estado no automato
     int p = 0;                         // Controla a posição tanto da vetor para literal quanto do vetor para o numero
-    int c;                             // Recebe o caracter do arquivo
+    char c;                             // Recebe o caracter do arquivo
     char literal[TamLexema];           // Vetor temporario que guarda o literal
     char numero[TamNum];               // Vetor temporario que guarda o numero
 
@@ -282,7 +282,7 @@ Token analex(FILE *fp){
                 literal[p] = c;
                 p++;
                 c = fgetc(fp);
-                if(isprint(c) && c != '\"'){
+                if(isprint(c) && c != '\"' && c != '\n'){
                     estado = 16;
                 }else if(c == '\"'){
                     estado = 17;
@@ -475,8 +475,10 @@ Token analex(FILE *fp){
                 c = fgetc(fp);
                 if(c == '*'){
                     estado = 44;
-                }else if(isprint(c) && c != '*'){
+                }else if(isprint(c) && c != '*' && c != '\n'){
                     estado = 43;
+                }else if(c == '\n'){
+                    contlin ++;
                 }
                 break;
             case 44:
