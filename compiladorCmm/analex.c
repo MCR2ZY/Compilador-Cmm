@@ -11,6 +11,15 @@
 
 int contlin = 1;
 int ultimoLiteral = 0;
+char TabelaLiterais[QntLiteral][TamLexema];
+char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
+        "booleano",        "caracter",        "enquanto",
+        "inteiro",         "para",            "real",
+        "retorne",         "se",              "semparam",
+        "semretorno",     "senao"
+    };
+
+Token erroToken(); // Função implementada no fim do analex.c
 
 Token analex(FILE *fp){
     Token token;                       // Recebe o token do analisador lexico
@@ -20,21 +29,6 @@ Token analex(FILE *fp){
     int c;                             // Recebe o caracter do arquivo
     char literal[TamLexema];           // Vetor temporario que guarda o literal
     char numero[TamNum];               // Vetor temporario que guarda o numero
-    char TabelaLiterais[QntLiteral][TamLexema];
-    char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
-        "booleano",        "caracter",        "enquanto",
-        "inteiro",         "para",            "real",
-        "retorne",         "se",              "semparam",
-        "semretorno",     "senao"
-    };
-    char TabSinais[QntSinal][TamSinal] = {
-        "{",    "(",    "&&",   "=",    "==",
-        "!=",   "/",    "}",    ")",    ">",
-        ">=",   "<",    "<=",   "*",    "!",
-        "||",   ";",    "+",    "-",    ","
-    };
-
-
 
     while(1){
 
@@ -42,16 +36,11 @@ Token analex(FILE *fp){
 
             case 0:
                 c = fgetc(fp);
-                if(c == EOF){
-                    ungetc(c, fp);
-                    token.tipo = END;
-                    token.valor.valorInt=0;
-                    return token;
-                }
-                else if(c == ' ' || c == '\t'){  // Filtra espacos e tabs
+
+                if(c == ' ' || c == '\t'){  // Filtra espacos e tabs exceto \n
                     estado = 0;
                 }
-                else if(c == '\n')
+                else if(c == '\n')            //Filtra os enter's + incrementa o contador de linhas
                 {
                     estado = 0;
                     contlin++;
@@ -117,10 +106,11 @@ Token analex(FILE *fp){
                 else if(c == '}'){          // Trata o fecha chave
                     estado = 46;
                 }
+                else if(c == EOF){
+                    estado = 47;
+                }
                 else{
-                    printf("\n\n\tErro, Token Invalido na Linha %d", contlin);
-                    token.tipo = END;
-                    token.valor.valorInt = 0;
+                    token = erroToken();
                     return token;
                 }
                 break;
@@ -160,7 +150,6 @@ Token analex(FILE *fp){
                 strcpy(TabelaLiterais[ultimoLiteral], literal);
                 ultimoLiteral++;
                 return token;
-                // Checar se ID já existe, se não add id a tabela com ids
                 break;
             case 3:
                 numero[p] = c;
@@ -188,7 +177,8 @@ Token analex(FILE *fp){
                 if(isdigit(c)){
                     estado = 6;
                 }else{
-                    //ErroToken;      // Criar a função erro token invalido
+                    token = erroToken();
+                    return token;
                 }
                 break;
             case 6:
@@ -225,7 +215,8 @@ Token analex(FILE *fp){
                 if(c == '\''){
                     estado = 10;
                 }else{
-                    //ErroToken;
+                    token = erroToken();
+                    return token;
                 }
                 break;
             case 10:
@@ -245,7 +236,8 @@ Token analex(FILE *fp){
                 }else if(c == 'n'){
                     estado = 14;
                 }else {
-                    //ErroToken;
+                    token = erroToken();
+                    return token;
                 }
                 break;
             case 12:
@@ -255,7 +247,8 @@ Token analex(FILE *fp){
                 if(c == '\''){
                     estado = 13;
                 }else{
-                    //ErroToken;
+                    token = erroToken();
+                    return token;
                 }
                 break;
             case 13:
@@ -273,7 +266,8 @@ Token analex(FILE *fp){
                 if(c == '\''){
                     estado = 15;
                 }else{
-                    //ErroToken;
+                    token = erroToken();
+                    return token;
                 }
                 break;
             case 15:
@@ -293,7 +287,8 @@ Token analex(FILE *fp){
                 }else if(c == '\"'){
                     estado = 17;
                 }else{
-                    //ErroToken;
+                    token = erroToken();
+                    return token;
                 }
                 break;
             case 17:
@@ -351,7 +346,9 @@ Token analex(FILE *fp){
                 if(c == '&'){
                     estado = 26;
                 }else{
-                    //ErroToken;
+                    token = erroToken();
+                    fclose(fp);
+                    return token;
                 }
                 break;
             case 26:
@@ -365,7 +362,9 @@ Token analex(FILE *fp){
                 if(c == '|'){
                     estado = 28;
                 }else{
-                    //ErroToken;
+                    token = erroToken();
+                    fclose(fp);
+                    return token;
                 }
                 break;
             case 28:
@@ -502,11 +501,24 @@ Token analex(FILE *fp){
                 strcpy(token.lexema, "}");
                 return token;
                 break;
+            case 47:
+                token.tipo = END;
+                token.valor.valorInt=1;
+                return token;
             default:
                 printf("\n\tErro Léxico!!!\n");
+                exit (1);
             break;
         }
 
     }
 
+}
+
+Token erroToken(){
+    Token tknAux;
+    printf("\n\n\tErro, Token Invalido na Linha %d", contlin);
+    tknAux.tipo = END;
+    tknAux.valor.valorInt = 0;
+    return tknAux;
 }
