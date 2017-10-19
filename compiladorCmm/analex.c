@@ -19,7 +19,7 @@ char TabPalReservadas[QntPalReservadas][TamPalReservadas] = {
         "semretorno",     "senao"
     };
 
-Token erroToken(); // Função implementada no fim do analex.c
+Token exceptionToken(); // Função implementada no fim do analex.c
 
 Token analex(FILE *fp){
     Token token;                       // Recebe o token do analisador lexico
@@ -110,7 +110,7 @@ Token analex(FILE *fp){
                     estado = 47;
                 }
                 else{
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -177,7 +177,7 @@ Token analex(FILE *fp){
                 if(isdigit(c)){
                     estado = 6;
                 }else{
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -215,7 +215,7 @@ Token analex(FILE *fp){
                 if(c == '\''){
                     estado = 10;
                 }else{
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -236,7 +236,7 @@ Token analex(FILE *fp){
                 }else if(c == 'n'){
                     estado = 14;
                 }else {
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -247,7 +247,7 @@ Token analex(FILE *fp){
                 if(c == '\''){
                     estado = 13;
                 }else{
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -266,7 +266,7 @@ Token analex(FILE *fp){
                 if(c == '\''){
                     estado = 15;
                 }else{
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -287,7 +287,7 @@ Token analex(FILE *fp){
                 }else if(c == '\"'){
                     estado = 17;
                 }else{
-                    token = erroToken();
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -346,8 +346,7 @@ Token analex(FILE *fp){
                 if(c == '&'){
                     estado = 26;
                 }else{
-                    token = erroToken();
-                    fclose(fp);
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -362,8 +361,7 @@ Token analex(FILE *fp){
                 if(c == '|'){
                     estado = 28;
                 }else{
-                    token = erroToken();
-                    fclose(fp);
+                    token = exceptionToken();
                     return token;
                 }
                 break;
@@ -455,6 +453,7 @@ Token analex(FILE *fp){
                 token.tipo = SN;
                 token.valor.codSN = SN_DIFERENTE;
                 strcpy(token.lexema, "!=");
+                return token;
                 break;
             case 41:
                 c = fgetc(fp);
@@ -479,6 +478,9 @@ Token analex(FILE *fp){
                     estado = 43;
                 }else if(c == '\n'){
                     contlin ++;
+                }else if(c == EOF){
+                    printf("\n\n\tERRO!!! Comentario aberto nao foi fechado!\n\n");
+                    exit (1);
                 }
                 break;
             case 44:
@@ -505,7 +507,7 @@ Token analex(FILE *fp){
                 break;
             case 47:
                 token.tipo = END;
-                token.valor.valorInt=1;
+                token.valor.valorInt=0;
                 return token;
             default:
                 printf("\n\tErro Léxico!!!\n");
@@ -517,10 +519,10 @@ Token analex(FILE *fp){
 
 }
 
-Token erroToken(){
+Token exceptionToken(){
     Token tknAux;
     printf("\n\n\tErro, Token Invalido na Linha %d", contlin);
     tknAux.tipo = END;
-    tknAux.valor.valorInt = 0;
+    tknAux.valor.valorInt = 1;
     return tknAux;
 }
