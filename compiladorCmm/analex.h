@@ -23,6 +23,7 @@
 #define TamLexema 30
 #define TamNum 20
 #define EOS '\0'
+#define tamNomeFile 10
 
 typedef enum palReservada{
     PR_BOOLEANO,        PR_CARACTER,        PR_ENQUANTO,
@@ -64,5 +65,6 @@ extern int contlin;
 extern int ultimoLiteral;
 
 Token analex(FILE *);
+Token erroToken();
 
 #endif // ANALEX_H_INCLUDED
